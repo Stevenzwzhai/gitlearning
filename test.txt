@@ -2,3 +2,4 @@ this is test txt
 master add
 feature1 add
 dev add
+add new message
