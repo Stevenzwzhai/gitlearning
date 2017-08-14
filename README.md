@@ -69,7 +69,103 @@ npm-debug.log
 yarn-error.log
 *.txt
 ```
+git push 使用本地的对应分支来更新对应的远程分支。
 
+$ git push <远程主机名> <本地分支名>:<远程分支名>
+
+注意: 命令中的本地分支是指将要被推送到远端的分支，而远程分支是指推送的目标分支，即将本地分支合并到远程分支。 
+如果省略远程分支名，则表示将本地分支推送与之存在”追踪关系”的远程分支(通常两者同名)，如果该远程分支不存在，则会被新建。
+
+$ git push origin master
+
+上面命令表示，将本地的master分支推送到origin主机的master分支。如果后者不存在，则会被新建。 
+origin是一个远程厂库地址。
+
+如果省略本地分支名，则表示删除指定的远程分支，因为这等同于推送一个空的本地分支到远程分支，这条命令是删除远程master分支。
+
+$ git push origin :master
+# 等同于
+$ git push origin --delete master
+
+上面命令表示删除origin主机的master分支。
+
+如果当前分支与远程分支之间存在追踪关系（即分支名相同），则本地分支和远程分支都可以省略。
+
+$ git push origin
+
+上面命令表示，将当前分支推送到origin主机的对应分支。
+
+如果当前分支只有一个追踪分支，那么主机名都可以省略。
+
+$ git push
+
+如果当前分支与多个主机存在追踪关系，则可以使用-u选项指定一个默认主机，这样后面就可以不加任何参数使用git push。
+
+$ git push -u origin master
+
+上面命令将本地的master分支推送到origin主机，同时指定origin为默认主机，后面就可以不加任何参数使用git push了。
+
+不带任何参数的git push，默认只推送当前分支，这叫做simple方式。此外，还有一种matching方式，会推送所有有对应的远程分支的本地分支。Git 2.0版本之前，默认采用matching方法，现在改为默认采用simple方式。如果要修改这个设置，可以采用git config命令。
+
+$ git config --global push.default matching
+# 或者
+$ git config --global push.default simple
+
+还有一种情况，就是不管是否存在对应的远程分支，将本地的所有分支都推送到远程主机，这时需要使用–all选项。
+
+$ git push --all origin
+
+上面命令表示，将所有本地分支都推送到origin主机。
+
+如果远程主机的版本比本地版本更新，推送时Git会报错，要求先在本地做git pull合并差异，然后再推送到远程主机。这时，如果你一定要推送，可以使用–force选项。
+
+$ git push --force origin
+
+上面命令使用–force选项，结果导致在远程主机产生一个”非直进式”的合并(non-fast-forward merge)。除非你很确定要这样做，否则应该尽量避免使用–force选项。
+
+最后，git push不会推送标签(tag)，除非使用–tags选项。
+
+$ git push origin --tags
+
+git pull 获取并合并其他的厂库，或者本地的其他分支。
+
+git pull 与 git push操作的目的相同，但是操作的目标相反。命令格式如下：
+
+git pull <远程主机> <远程分支>:<本地分支>
+
+例如：
+
+git pull origin master:my_test
+
+上面的命令是将origin厂库的master分支拉取并合并到本地的my_test分支上。
+
+如果省略本地分支，则将自动合并到当前所在分支上。如下：
+
+git pull origin master
+
+注：如果你想参与github上的一些优秀的项目，则下面提供一个通用的例子： 
+首先，需要一个github的账号，并fork一个你感兴趣的repository。 
+下面描述过程中会涉及两个远程主分支，为了很好的区别，我们把fork出来的主分支称为远程A repository，本fork的分支称为远程B repository
+
+$git clone <远程Arepository> #克隆你fork出来的分支
+
+$git remote add <远程Brepository标签> git@github.com:XXXX/ceph.git #添加远程Brepository标签
+
+$git pull <远程B厂库标签> master:master  #从远程Brepository的master分支拉取最新objects合并到本地master分支
+
+$git checkout YYYY #切换到要修改的分支上
+
+$git branch develop; git checkout develop #在当前分支的基础上创建一个开发分支，并切换到该分支上，你将在该分支上coding
+
+coding...... #在工作区coding
+
+$git add .#将修改保存到索引区
+
+$git commit -a #将修改提交到本地分区
+
+$git push origin my_test:my_test #将本地分支my_test提交到远程A repository的my_test分支上
+
+然后在github web界面上将my_test分支合并到你需改的远程B repository 分支上。等待管理员review，如果有问题，就继续在develop分支当修改，并commit –amend，在之前的commit上修改。知道被meger。
 
 
 
