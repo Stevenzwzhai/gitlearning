@@ -84,7 +84,7 @@ origin是一个远程厂库地址。
 如果省略本地分支名，则表示删除指定的远程分支，因为这等同于推送一个空的本地分支到远程分支，这条命令是删除远程master分支。
 
 $ git push origin :master
-# 等同于
+  等同于
 $ git push origin --delete master
 
 上面命令表示删除origin主机的master分支。
@@ -108,7 +108,7 @@ $ git push -u origin master
 不带任何参数的git push，默认只推送当前分支，这叫做simple方式。此外，还有一种matching方式，会推送所有有对应的远程分支的本地分支。Git 2.0版本之前，默认采用matching方法，现在改为默认采用simple方式。如果要修改这个设置，可以采用git config命令。
 
 $ git config --global push.default matching
-# 或者
+ 或者
 $ git config --global push.default simple
 
 还有一种情况，就是不管是否存在对应的远程分支，将本地的所有分支都推送到远程主机，这时需要使用–all选项。
