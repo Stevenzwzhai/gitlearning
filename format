@@ -1,0 +1,7 @@
+this.currentValue = this.currentValue.replace(/[^\d.]/g,"");
+				//必须保证第一个为数字而不是.
+				this.currentValue = this.currentValue.replace(/^\./g,"");
+				//保证只有出现一个.而没有多个.
+				this.currentValue = this.currentValue.replace(/\.{2,}/g,"");
+				//保证.只出现一次，而不能出现两次以上
+				this.currentValue = this.currentValue.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
